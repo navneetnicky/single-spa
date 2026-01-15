@@ -7,6 +7,7 @@ export default defineConfig({
     port: 5173,
     cors: true,
     strictPort: true,
+    origin: 'http://localhost:5173',
   },
   build: {
     manifest: true,
@@ -17,15 +18,19 @@ export default defineConfig({
         entryFileNames: 'myapp-vite.js',
       },
       preserveEntrySignatures: 'strict',
-      external: ['react', 'react-dom', 'react-dom/client', 'single-spa'],
+      external: ['single-spa'],  // Only single-spa is external, React will be bundled
     },
     outDir: 'dist',
     minify: false,
+    watch: {},
   },
   preview: {
     port: 5173,
     cors: true,
     strictPort: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
-  base: 'http://localhost:5173/',
+  base: '/',
 });

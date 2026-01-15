@@ -1,9 +1,13 @@
-const path = require('path');
+    const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    'myapp-react16': './src/index.js',
+    'spa-config': './src/spa-config.js',
+  },
   output: {
-    filename: 'myapp-react16.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'system',
     publicPath: 'http://localhost:8080/',
@@ -11,6 +15,7 @@ module.exports = {
   mode: 'development',
   devServer: {
     port: 8080,
+    historyApiFallback: true,
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
@@ -33,9 +38,15 @@ module.exports = {
       },
     ],
   },
-  externals: ['react', 'react-dom', 'react-router-dom', 'single-spa'],
+  externals: ['single-spa'],
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      excludeChunks: ['myapp-react16', 'spa-config'],
+    }),
+  ],
   devtool: 'source-map',
 };

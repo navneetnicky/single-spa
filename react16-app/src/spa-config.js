@@ -5,26 +5,25 @@ registerApplication({
   name: '@myapp/react16',
   app: () => System.import('@myapp/react16'),
   activeWhen: (location) => {
-    // React 16 handles these routes
     const path = location.pathname;
-    // Handle root path separately to avoid matching all paths
+    // React 16 handles these routes
     if (path === '/' || path === '/home' || path === '/about' || path === '/contact') {
       return true;
     }
-    // Match subpaths (but not for root '/')
+    // Match subpaths
     return ['/home', '/about', '/contact'].some(route =>
       path.startsWith(route + '/')
     );
   },
 });
 
-// Register Vite (React 19) app
+// Register Vite (React 18) app
 registerApplication({
   name: '@myapp/vite',
   app: () => System.import('@myapp/vite'),
   activeWhen: (location) => {
     // Vite app handles these routes
-    return ['/dashboard', '/profile', '/settings'].some(route => 
+    return ['/dashboard', '/profile', '/settings'].some(route =>
       location.pathname === route || location.pathname.startsWith(route + '/')
     );
   },
