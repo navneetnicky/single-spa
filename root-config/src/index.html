@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single-SPA Application</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    }
+    #single-spa-application {
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <!-- Main navigation (optional - shared across apps) -->
+  <nav style="background: #333; color: white; padding: 1rem;">
+    <a href="/home" style="color: white; margin-right: 1rem; text-decoration: none;">Home (React 16)</a>
+    <a href="/about" style="color: white; margin-right: 1rem; text-decoration: none;">About (React 16)</a>
+    <a href="/contact" style="color: white; margin-right: 1rem; text-decoration: none;">Contact (React 16)</a>
+    <span style="margin: 0 1rem; color: #666;">|</span>
+    <a href="/dashboard" style="color: white; margin-right: 1rem; text-decoration: none;">Dashboard (Vite)</a>
+    <a href="/profile" style="color: white; margin-right: 1rem; text-decoration: none;">Profile (Vite)</a>
+    <a href="/settings" style="color: white; margin-right: 1rem; text-decoration: none;">Settings (Vite)</a>
+  </nav>
+
+  <!-- Single-SPA mounts apps here -->
+  <div id="single-spa-application"></div>
+
+  <!-- Import maps for module loading -->
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.5/lib/system/single-spa.min.js",
+        "react": "https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js",
+        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js",
+        "react-dom/client": "https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js",
+        "react-router-dom": "https://cdn.jsdelivr.net/npm/react-router-dom@5.3.4/umd/react-router-dom.min.js",
+        "@myapp/root-config": "http://localhost:9000/root-config.js",
+        "@myapp/react16": "http://localhost:8080/myapp-react16.js",
+        "@myapp/vite": "http://localhost:5173/myapp-vite.js"
+      }
+    }
+  </script>
+  
+  <!-- SystemJS for module loading -->
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.14.2/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.14.2/dist/extras/amd.min.js"></script>
+
+  <!-- Load root-config to register and start single-spa -->
+  <script>
+    System.import('@myapp/root-config').catch(function(err) {
+      console.error('Failed to load root-config:', err);
+    });
+  </script>
+</body>
+</html>
